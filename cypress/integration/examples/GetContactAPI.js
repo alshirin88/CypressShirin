@@ -1,18 +1,24 @@
 /// <reference types = "Cypress" />
 
-describe('get api user tests', ()=>{
+import { token as getToken } from "../../utils/token";
 
-    let token ='Bearer 00DDn000002o23L!ARsAQGaEajRAu4tcr26UxBwRHDHRL1uynHceOXcxxRJf4NPsuTVqncMN0qrqKhoeVjDOneZJADNJGT27VEmpsvtgEIPsfI.b'
+describe('get api user tests', async ()=>{
 
-
-    it('get users',()=>{
+    it('get users',async ()=>{
+        
+        let token = await getToken()
+        
+        //cy.log("TOKEN: ", token)
+        token = `Bearer ${token}`
 
         cy.request({
+
             method: 'GET',
 
             url : 'https://slalom476-dev-ed.develop.my.salesforce.com/services/data/v56.0/sobjects/Contact/003Dn000006xQtPIAU',
 
             headers: {
+
                 'authorization': token
             }
 

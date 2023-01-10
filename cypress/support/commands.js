@@ -36,9 +36,9 @@ Cypress.Commands.add('login', (email, password) => {
 
 })
 
-
 Cypress.Commands.add('getToken', () => { //API to generate token
-    cy.request({
+
+     cy.request({
 
         method: 'POST',
         url: 'https://login.salesforce.com/services/oauth2/token',
@@ -60,3 +60,4 @@ Cypress.Commands.add('getToken', () => { //API to generate token
         access_token=response.body.access_token;
     })
 })
+
