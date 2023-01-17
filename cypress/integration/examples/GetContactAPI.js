@@ -1,15 +1,14 @@
 /// <reference types = "Cypress" />
 
-import { token as getToken } from "../../utils/token";
+beforeEach(() => {
+    cy.getBearerToken()
+  })
+  
+  describe('Create Account via API', (token) => {
+  
+    it('Create account', () => {
 
-describe('get api user tests', async ()=>{
-
-    it('get users',async ()=>{
-        
-        let token = await getToken()
-        
-        //cy.log("TOKEN: ", token)
-        token = `Bearer ${token}`
+      const token = Cypress.env('token')
 
         cy.request({
 
@@ -18,8 +17,7 @@ describe('get api user tests', async ()=>{
             url : 'https://slalom476-dev-ed.develop.my.salesforce.com/services/data/v56.0/sobjects/Contact/003Dn000006xQtPIAU',
 
             headers: {
-
-                'authorization': token
+                'authorization': `Bearer ${token}`,
             }
 
 
@@ -30,26 +28,6 @@ describe('get api user tests', async ()=>{
            expect(res.body.attributes).has.property('type','Contact')
            //ASSERT URL
            expect(res.body.attributes).has.property('url','/services/data/v56.0/sobjects/Contact/003Dn000006xQtPIAU')
-
-          // expect(res.body).has.property('id','001Dn00000AeFRRIA3')
-
-
-
-            // const name = resp.body[3].name
-            // return name
-//         })
-
-//        .then((name)=>{
-//         cy.request({
-//         method: 'GET',
-//         url: 'https://slalom476-dev-ed.develop.my.salesforce.com/services/data/v56.0/query/?q='+name
-
-//     }).then((resp)=>{
-//         expect(res.status).to.eq(200)
-//         expect(res.body[3]).to.have.property('name',name)
-
-//     })
-// })
 
         })
     })

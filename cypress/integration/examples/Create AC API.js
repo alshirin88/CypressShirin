@@ -1,58 +1,42 @@
+
 /// <reference types = "Cypress" />
 
-describe('get api user tests', ()=>{
+const  dataJson = require('..//..//fixtures/example')
 
-    let token ='Bearer 00DDn000002o23L!ARsAQIB0efuamH9pg5BQyOZzcQODz_6zxO7TDzYyj6oVd_8b4sAn.9nw_D3.pWGwschLi74ArGaSisbRxiIK3M18fo1CgolL'
+beforeEach(() => {
+    cy.getBearerToken() 
+  })
 
-    it('get users',()=>{
+  describe('Create Account via API', (token) => {
+  
+    it('Create account', () => {
 
-        cy.request({
-            method: 'POST',
+      const token = Cypress.env('token')
+  
+      cy.request({
+        method: 'POST',
+        url: 'https://slalom476-dev-ed.develop.my.salesforce.com/services/data/v56.0/sobjects/Contact/',
+  
+        headers: {
+          'authorization': `Bearer ${token}`,
+          'Content-Type': "application/json; charset=UTF-8",
+          'Accept': "application/json"
+        },
 
-            url : 'https://slalom476-dev-ed.develop.my.salesforce.com/services/data/v56.0/sobjects/Account/',
+        body: {
+          "FirstName": dataJson.FirstName,                  
+          "LastName": dataJson.LastName,
+          "MailingStreet": dataJson.MailingStreet,
+          "Title": dataJson.Title,
+          "OtherCity": dataJson.OtherCity,
+          "OtherState": dataJson.OtherState,
+          "OtherPostalCode":dataJson.OtherPostalCode,
+          "OtherCountry": dataJson.OtherCountry
 
-            headers: {
-
-                'authorization': "",
-
-                'Content-Type': "application/json; charset=UTF-8",
-
-                 'Accept': "application/json"
-                },
-
-                body: {
-        
-                    "Name": "Alex DeSouza",
-
-                    "Description": "tools",
-
-                    "Phone":  "+6039660555",
-
-                    "Fax": "1234678032",
-
-                    "Website": "www.salesforce.com"
-                    
-
-                        }
-                        
-        
-            }).then((res)=>{
-
-               cy.log(JSON.stringify(res))
-            
-               //status code
-                expect(res.status).to.eq(201)
-
-                //validation of success
-                 expect(res.body).has.property('success',true)
-
-                // expect(res.body).has.property('id','001Dn00000AeKT0IAN')
-                // expect(res.body).has.property('errors',[])
-                //  expect(res.body).has.property('status','active')
-                //  expect(res.body).has.property('gender','male')
-        
-        
-            })
-        })
-        })
-           
+        }
+       
+      }).then((response) => {
+        expect(response.status).to.eq(201)
+      })
+    })
+  })

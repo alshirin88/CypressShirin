@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules\\.bin\\cypress run --config pageLoadTimeout=100000",
-    "runtests": "npm run test --"
+    "test": "node_modules/.bin/cypress run --config pageLoadTimeout=100000",
+    "runtests": "npm run test --",
+    "merge: reports": "mochawesome-merge 'cypress/reports/mochawesome-report/*.json' > cypress/reports/cypress-combined-report.json"
   },
-  "author": "",
+  "author": "Shirin",
   "license": "ISC",
   "dependencies": {
     "cypress": "^10.1.0"

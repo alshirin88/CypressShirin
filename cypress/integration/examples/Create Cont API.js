@@ -1,9 +1,15 @@
 /// <reference types = "Cypress" />
 
-describe('get api user tests', ()=>{
+beforeEach(() => {
+    cy.getBearerToken()
+  })
+  
+  describe('Create Account via API', (token) => {
+  
+    it('Create account', () => {
 
-    //let token ='Bearer 00DDn000002o23L!ARsAQIB0efuamH9pg5BQyOZzcQODz_6zxO7TDzYyj6oVd_8b4sAn.9nw_D3.pWGwschLi74ArGaSisbRxiIK3M18fo1CgolL'
- 
+      const token = Cypress.env('token')
+
      it('get users',()=>{
  
          cy.request({
@@ -14,7 +20,7 @@ describe('get api user tests', ()=>{
  
              headers: {
                  
-                 'authorization': "",
+                 'authorization':`Bearer ${token}`,
  
                  'Content-Type': "application/json; charset=UTF-8",
  
@@ -22,9 +28,6 @@ describe('get api user tests', ()=>{
                  },
  
                  body: {
-         
-                     
- 
                          "FirstName": "Dima ",
  
                          "LastName": "Chobatar",
@@ -64,4 +67,4 @@ describe('get api user tests', ()=>{
              })
          })
          })
-            
+        })
